@@ -11,17 +11,6 @@ async def run_chat_agent():
     client = Client("http://localhost:8000/mcp/")
     chat_model = load_hf_chat_model()
 
-    # Step 1: Ingest folder (once at the beginning)
-    async with client:
-        tools = await client.list_tools()
-        tool_names = [tool.name for tool in tools]
-
-        if "ingest_folder" in tool_names:
-            result = await client.call_tool("ingest_folder", {"path": "/home/rayhanhossen/BracIT/RAG/smart_document_assistant/docs"})
-            if hasattr(result, "content"):
-                print("Ingest_Folder:", result.content)
-
-
     # Step 2: Run Search Chat Loop
     print("\nSmart Doc Agent ready! Ask questions (type 'exit' to quit).")
     while True:
